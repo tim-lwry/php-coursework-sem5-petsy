@@ -7,3 +7,15 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
+  db:
+    image: mysql:latest
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=root'
+    ports:
+      - '3306'
+    volumes:
+      - ./petsy_init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_volume:/var/lib/mysql
+
+volumes:
+  db_volume:
