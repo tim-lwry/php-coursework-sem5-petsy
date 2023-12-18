@@ -48,7 +48,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         
 
             Yii::$app->getUser()?->getIdentity()?->getId()==='100'? 
-            ['label' => 'REST', 'url' => ['/animal']] : ['label' => 'Животные', 'url' => ['/site/animal']] ,
+            ['label' => 'CRUD', 'url' => ['/animal']] : ['label' => 'Животные', 'url' => ['/site/animal']] ,
             
             Yii::$app->getUser()?->getIdentity()?->getId()==='100'? 
              ['label' => 'Gii', 'url' => ['/gii']]: "",
