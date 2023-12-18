@@ -19,10 +19,11 @@ $this->title = 'Petsy';
             <div class="center-block">
                 <h2>Подробней</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <p>Эксперты выяснили, что всего в России насчитывается 67 млн кошек и собак.<br>
+                Из них 4,1 млн, или 6%, — бездомные.<br>
+                3,2 млн кошек и 735 тысяч собак живут на улице.<br>
+                144 тысячи животных — в приютах.
+                </p>
 
                 <p><a class="btn btn-outline-secondary" href="about">О нас &raquo;</a></p>
             </div>

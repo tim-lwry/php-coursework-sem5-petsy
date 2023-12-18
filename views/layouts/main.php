@@ -45,13 +45,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             
             // Yii::$app->user->isGuest ?
             // ['label' => 'Register', 'url' => ['/site/register']]:"",
-            Yii::$app->user->isGuest ? 
-            "" :  ['label' => 'Gii', 'url' => ['/gii']
-                    ],
-             Yii::$app->user->isGuest ? 
-             ['label' => 'Животные', 'url' => ['/site/animal']
-             ]:  ['label' => 'REST', 'url' => ['/animal']
-                    ],       
+        
+
+            Yii::$app->getUser()?->getIdentity()?->getId()==='100'? 
+            ['label' => 'REST', 'url' => ['/animal']] : ['label' => 'Животные', 'url' => ['/site/animal']] ,
+            
+            Yii::$app->getUser()?->getIdentity()?->getId()==='100'? 
+             ['label' => 'Gii', 'url' => ['/gii']]: "",
+
             Yii::$app->user->isGuest
                 ? ['label' => 'Войти', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
