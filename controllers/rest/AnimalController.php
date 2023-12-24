@@ -1,7 +1,7 @@
 <?php 
 namespace app\controllers\rest;
 use app\models\Animal;
-use yii\filters\AccessControl;
+use app\models\User;
 use yii\web\ForbiddenHttpException;
 use Yii;
 
@@ -26,6 +26,8 @@ class AnimalController extends \yii\rest\ActiveController {
     // }
     public function actionRequest()
     {
+        // if(User::getAuthority()<3)
+        //     throw new ForbiddenHttpException("Нет доступа");
         if (Yii::$app->request->isPost){
             // if (!$user->can('yourPermission')) {
             //     throw new ForbiddenHttpException('You are not allowed to perform this action.');

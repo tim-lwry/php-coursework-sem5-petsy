@@ -10,7 +10,8 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Animal;
-
+use app\models\User;
+use yii\web\ForbiddenHttpException;
 class SiteController extends Controller
 {
     /**
@@ -133,5 +134,11 @@ class SiteController extends Controller
     public function actionAnimalView($id){
         $animal = Animal::findOne($id); 
         return $this->render('animal-view', ['animal'=>$animal]);
+    }
+
+    public function actionLists(){
+        if(User::getAuthority()<2)
+            throw new ForbiddenHttpException("Нет доступа");
+            return $this->render('CRUD');
     }
 }

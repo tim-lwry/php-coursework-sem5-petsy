@@ -21,6 +21,20 @@ USE `petsy`;
 -- Table structure for table `animal`
 --
 
+CREATE TABLE IF NOT EXISTS `user`(
+    `id` int NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (`id`),
+    `username` varchar(45) not null,
+    `password` varchar(45) not null,
+    `role` varchar(25) not null,
+    `authKey` varchar(200) DEFAULT null
+);
+
+insert into `user` (`username`, `password`, `role`) values
+('admin', 'admin', 'ADMINISTRATOR'),
+('user1', 'user1', 'WORKER'),
+('user2', 'user2', 'CLIENT');
+
 DROP TABLE IF EXISTS `animal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -87,8 +101,10 @@ CREATE TABLE `client` (
   `gender` varchar(1) NOT NULL,
   `address` varchar(100) DEFAULT NULL,
   `phone_number` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=cp1251;
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+);
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +113,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'Иван','Иванов','Иванович','M','...','1234567890'),(2,'Валерия','Роботова','Игнатьевна','Ж','...','0192837465'),(3,'Анна','Гробова','Дмитриевна','Ж','...','0987654321'),(4,'ИВАН','ННН',NULL,'М','...','1234567891');
+INSERT INTO `client` VALUES (1,'Иван','Иванов','Иванович','M','...','1234567890', 3);
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,10 +189,11 @@ CREATE TABLE `employee` (
   `surname` varchar(45) NOT NULL,
   `patronymic` varchar(45) DEFAULT NULL,
   `employee_type_fk` int NOT NULL,
+  `user_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `employee_type_fk` (`employee_type_fk`),
-  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`employee_type_fk`) REFERENCES `employee_type` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251;
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`employee_type_fk`) REFERENCES `employee_type` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+);
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,7 +202,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'Иван','Иванов','Иванович',1),(2,'Важный','Важнов','Важнович',4);
+INSERT INTO `employee` VALUES (1,'Иван','Иванов','Иванович',1,1),(2,'Важный','Важнов','Важнович',4,2);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 

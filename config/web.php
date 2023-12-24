@@ -51,6 +51,7 @@ $config = [
             'rules' => [
                 "/login" => "/site/login",
                 "/register" => "/site/register",
+                "/crud" => "/site/lists"
                 //"/admin/rest/animal" => "/rest/animal"
                 // [
                 //     'class' => 'yii\rest\UrlRule', 

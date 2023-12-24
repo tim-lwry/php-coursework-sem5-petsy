@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use app\models\User;
+use yii\web\ForbiddenHttpException;
 
 /**
  * AnimalController implements the CRUD actions for Animal model.
@@ -66,6 +68,8 @@ class AnimalController extends Controller
      */
     public function actionIndex()
     {
+        if(User::getAuthority()<2)
+            throw new ForbiddenHttpException("Нет доступа");
         $dataProvider = new ActiveDataProvider([
             'query' => Animal::find(),
             /*
@@ -93,6 +97,8 @@ class AnimalController extends Controller
      */
     public function actionView($id)
     {
+        if(User::getAuthority()<2)
+            throw new ForbiddenHttpException("Нет доступа");
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -105,6 +111,8 @@ class AnimalController extends Controller
      */
     public function actionCreate()
     {
+        if(User::getAuthority()<2)
+            throw new ForbiddenHttpException("Нет доступа");
         $model = new Animal();
 
         if ($this->request->isPost) {
@@ -121,6 +129,8 @@ class AnimalController extends Controller
     }
 
     public function actionGet($id){
+        if(User::getAuthority()<2)
+            throw new ForbiddenHttpException("Нет доступа");
         $model = Animal::findOne($id);
         $json = json_encode(
             [
@@ -143,6 +153,8 @@ class AnimalController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(User::getAuthority()<2)
+            throw new ForbiddenHttpException("Нет доступа");
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -163,6 +175,8 @@ class AnimalController extends Controller
      */
     public function actionDelete($id)
     {
+        if(User::getAuthority()<2)
+            throw new ForbiddenHttpException("Нет доступа");
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -177,6 +191,8 @@ class AnimalController extends Controller
      */
     protected function findModel($id)
     {
+        if(User::getAuthority()<2)
+            throw new ForbiddenHttpException("Нет доступа");
         if (($model = Animal::findOne(['id' => $id])) !== null) {
             return $model;
         }

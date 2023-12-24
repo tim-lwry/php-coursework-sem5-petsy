@@ -2,19 +2,18 @@
 
 namespace app\controllers;
 
-use app\models\AnimalRace;
+use app\models\User;
+use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use app\models\User;
-use yii\web\ForbiddenHttpException;
+use yii\web\UnauthorizedHttpException;
 
 /**
- * AnimalRaceController implements the CRUD actions for AnimalRace model.
+ * UserController implements the CRUD actions for User model.
  */
-class AnimalRaceController extends Controller
+class UserController extends Controller
 {
     /**
      * @inheritDoc
@@ -30,41 +29,21 @@ class AnimalRaceController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
-                'access' =>[
-                    'class' => AccessControl::className(),
-                    'rules' => [
-                        // [
-                        //     'actions' => ['update', 'delete', 'create'],
-                        //     'allow' => false,
-                        //     'roles' => ['?'],
-                        // ],
-                        [
-                            'actions' => ['update', 'delete', 'view', 'index', 'create'],
-                            'allow' => true,
-                            'roles' => ['@'],
-                        ],
-                        // [
-                        //     'actions' => ['view', 'index'],
-                        //     'allow' => true,
-                        //     'roles' => ['?'],
-                        // ],
-                    ]
-                ]
             ]
         );
     }
 
     /**
-     * Lists all AnimalRace models.
+     * Lists all User models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        if(User::getAuthority()<2)
+        if(User::getAuthority()<3)
             throw new ForbiddenHttpException("Нет доступа");
         $dataProvider = new ActiveDataProvider([
-            'query' => AnimalRace::find(),
+            'query' => User::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -83,14 +62,14 @@ class AnimalRaceController extends Controller
     }
 
     /**
-     * Displays a single AnimalRace model.
+     * Displays a single User model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        if(User::getAuthority()<2)
+        if(User::getAuthority()<3)
             throw new ForbiddenHttpException("Нет доступа");
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -98,15 +77,15 @@ class AnimalRaceController extends Controller
     }
 
     /**
-     * Creates a new AnimalRace model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        if(User::getAuthority()<2)
+        if(User::getAuthority()<3)
             throw new ForbiddenHttpException("Нет доступа");
-        $model = new AnimalRace();
+        $model = new User();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -122,7 +101,7 @@ class AnimalRaceController extends Controller
     }
 
     /**
-     * Updates an existing AnimalRace model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -130,7 +109,7 @@ class AnimalRaceController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(User::getAuthority()<2)
+        if(User::getAuthority()<3)
             throw new ForbiddenHttpException("Нет доступа");
         $model = $this->findModel($id);
 
@@ -144,7 +123,7 @@ class AnimalRaceController extends Controller
     }
 
     /**
-     * Deletes an existing AnimalRace model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -152,7 +131,7 @@ class AnimalRaceController extends Controller
      */
     public function actionDelete($id)
     {
-        if(User::getAuthority()<2)
+        if(User::getAuthority()<3)
             throw new ForbiddenHttpException("Нет доступа");
         $this->findModel($id)->delete();
 
@@ -160,17 +139,18 @@ class AnimalRaceController extends Controller
     }
 
     /**
-     * Finds the AnimalRace model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return AnimalRace the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if(User::getAuthority()<2)
+        if(User::getAuthority()<3)
             throw new ForbiddenHttpException("Нет доступа");
-        if (($model = AnimalRace::findOne(['id' => $id])) !== null) {
+
+        if (($model = User::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
