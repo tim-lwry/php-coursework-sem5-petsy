@@ -11,6 +11,8 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Animal;
 use app\models\User;
+use app\models\Client;
+use app\models\Employee;
 use yii\web\ForbiddenHttpException;
 class SiteController extends Controller
 {
@@ -140,5 +142,12 @@ class SiteController extends Controller
         if(User::getAuthority()<2)
             throw new ForbiddenHttpException("Нет доступа");
             return $this->render('CRUD');
+    }
+
+    public function actionProfile(){
+        if(User::getAuthority()==0)
+            $this->redirect(['login']);
+        else
+            return $this->render('profile', ["data"=>Yii::$app->user->identity->getUserData()]);
     }
 }

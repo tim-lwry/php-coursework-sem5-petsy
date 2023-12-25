@@ -55,14 +55,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
             Yii::$app->user->isGuest
                 ? ['label' => 'Войти', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Выйти (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
+                : ['label' => 'Профиль', 'url' => ['/site/profile']]
+                // : '<li class="nav-item">'
+                //     . Html::beginForm(['/site/logout'])
+                //     . Html::submitButton(
+                //         'Выйти (' . Yii::$app->user->identity->username . ')',
+                //         ['class' => 'nav-link btn btn-link logout']
+                //     )
+                //     . Html::endForm()
+                //     . '</li>'
             ,
                 
         ]

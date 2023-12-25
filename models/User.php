@@ -157,8 +157,29 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         switch(Yii::$app->user->identity->role){
             case "ADMINISTRATOR": return 3;
             case "WORKER": return 2;
-            case "USER": return 1;
+            case "CLIENT": return 1;
         }
         return 0;
+    }
+
+    public function getUserData(){
+        if(Yii::$app->user->identity==null)
+        return "Пользователь не найден";
+        else
+        {
+            switch(Yii::$app->user->identity->role){
+                case "ADMINISTRATOR":
+                case "WORKER": {
+                    $emp = Employee::find()->select('name, surname, patronymic, employee_type_fk')->where(['user_id'=>Yii::$app->user->identity->id])->one();
+                    $emp_type = EmployeeType::findOne($emp->employee_type_fk);
+                    return ["FIO"=>$emp, "type"=>$emp_type];
+                }
+                case "CLIENT": {
+                    $cli = Client::find()->select('name, surname, patronymic')->where(['user_id'=>Yii::$app->user->identity->id])->one();
+                    return ["FIO"=>$cli];
+                }
+            }
+        }
+
     }
 }
